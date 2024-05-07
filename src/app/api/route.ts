@@ -1,9 +1,14 @@
-import { readFileSync, writeFileSync } from "fs"
+import { existsSync, readFileSync, writeFileSync } from "fs"
 import { join } from "path"
 
 export const GET = async () => {
-    const data = readFileSync(join("tmp", "join-code.txt"), "utf8")
-    return Response.json({ joinCode: data })
+    const filePath = join("tmp", "join-code.txt");
+    if (!existsSync(filePath)) {
+        writeFileSync(filePath, "");
+    }
+
+    const data = readFileSync(filePath, "utf8");
+    return Response.json({ joinCode: data });
 }
 
 interface JoinCode {
