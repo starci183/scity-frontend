@@ -1,6 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from "fs"
 import { join } from "path"
-import { json } from "stream/consumers";
 
 export const GET = async () => {
     const filePath = join("tmp", "join-code.txt");
@@ -15,6 +14,8 @@ interface JoinCode {
 
 export const POST = async (request: Request) => {
     const { joinCode } = await request.json() as JoinCode
-    writeFileSync(join("tmp", "join-code.txt"), joinCode, "utf8")
+
+    const filePath = join("./tmp", "join-code.txt");
+    writeFileSync(join("./tmp", "join-code.txt"), joinCode, "utf8")
     return Response.json({ message: "ok" })
 }
