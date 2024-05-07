@@ -13,4 +13,5 @@ interface JoinCode {
 export const POST = async (request: Request) => {
     const { joinCode } = await request.json() as JoinCode
     writeFileSync(join(process.cwd(), "join-code.txt"), joinCode, "utf8")
+    return Response.json({ message: "ok" })
 }
