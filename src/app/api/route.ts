@@ -1,11 +1,10 @@
 import { existsSync, readFileSync, writeFileSync } from "fs"
 import { join } from "path"
 
-export const GET = async () => {
-    const filePath = join("tmp", "join-code.txt");
+let savedJoinCode = ""
 
-    const joinCode = existsSync(filePath) ?  readFileSync(filePath, "utf8") : ""
-    return Response.json({ joinCode })
+export const GET = async () => {
+    return Response.json({ joinCode: savedJoinCode })
 }
 
 interface JoinCode {
@@ -14,8 +13,6 @@ interface JoinCode {
 
 export const POST = async (request: Request) => {
     const { joinCode } = await request.json() as JoinCode
-
-    const filePath = join("./tmp", "join-code.txt");
-    writeFileSync(join("./tmp", "join-code.txt"), joinCode, "utf8")
+    savedJoinCode = joinCode
     return Response.json({ message: "ok" })
 }
